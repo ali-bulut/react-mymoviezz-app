@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import logo from "../logo.svg";
 
 import { Container, Dropdown, Image, Menu, Icon } from "semantic-ui-react";
@@ -9,10 +10,12 @@ const HeaderContent = () => {
     <React.Fragment>
       <Menu fixed="top" inverted>
         <Container>
-          <Menu.Item as="a" header>
+            <Link to="/">
+          <Menu.Item header>
             <Image size="mini" src={logo} style={{ marginRight: "1.5em" }} />
             MyMoviezz
           </Menu.Item>
+          </Link>
           <Menu.Item as="a" position="right">
             <Icon name="adn" />
             Adminlerimiz
@@ -37,6 +40,11 @@ const HeaderContent = () => {
             text="Admin Name &nbsp;"
           >
             <Dropdown.Menu >
+            <Dropdown.Item>
+                <Icon name="log out" />
+                Çıkış Yap
+              </Dropdown.Item>
+              <Dropdown.Divider/>
               <Dropdown.Item>
                 <Icon name="user" />
                 Hesabı Güncelle

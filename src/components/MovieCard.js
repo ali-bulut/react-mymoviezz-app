@@ -1,7 +1,10 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import { Card, Icon, Button } from "semantic-ui-react";
 
 const MovieCard = (props) => {
+    const description = props.movie.description;
+    const shorterDesc = description.substring(0,130) + "...";
   return (
     <div>
       <Card>
@@ -12,24 +15,26 @@ const MovieCard = (props) => {
             <span className="date">{props.movie.genre}</span>
           </Card.Meta>
           <Card.Description>
-          {props.movie.description}
+          {shorterDesc}
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-        <Button>
-          <Icon name="download" />
-          <a
+        <a
             href={props.movie.downloadUrl}
             rel="noopener noreferrer"
             target="_blank"
           >
+        <Button>
+          <Icon name="download" />
             Filmi Indir
-          </a>
         </Button>
+        </a>
+        <Link to={`/${props.movie.id}`}>
         <Button style={{float:'right'}}>
           <Icon name="hand point right" />
           &nbsp; Detaylar
         </Button>
+        </Link>
         </Card.Content>
       </Card>
     </div>
