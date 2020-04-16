@@ -1,64 +1,105 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import logo from "../logo.svg";
 
-import { Container, Dropdown, Image, Menu, Icon } from "semantic-ui-react";
+import { Container, Dropdown, Image, Menu, Icon, Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
+import { connect } from "react-redux";
 
-const HeaderContent = () => {
-  return (
-    <React.Fragment>
-      <Menu fixed="top" inverted>
-        <Container>
-            <Link to="/">
-          <Menu.Item header>
-            <Image size="mini" src={logo} style={{ marginRight: "1.5em" }} />
-            MyMoviezz
-          </Menu.Item>
-          </Link>
-          <Menu.Item as="a" position="right">
-            <Icon name="adn" />
-            Adminlerimiz
-          </Menu.Item>
-          <Menu.Item as="a" >
-            <Icon name="sign-in" />
-            Giriş Yap / Üye Ol
-          </Menu.Item>
-          <Menu.Item as="a" >
-            <Icon name="add circle" />
-            Yeni Film Ekle
-          </Menu.Item>
+import {login,logout} from '../actions/authentication-actions';
+
+
+class HeaderContent extends React.Component {
+  
+  render() {
+    const logout = () => {
+        this.props.logout();
+    }
+
+    let routes;
+    if (localStorage.hasOwnProperty("adminData")) {
+     const storedData = JSON.parse(localStorage.getItem("adminData"));
+       routes = (
+        <React.Fragment>
           <Menu.Item as="a">
-            <Icon name="ethereum" />
-            Eklediğim Filmler
+              <Icon name="add circle" />
+              Yeni Film Ekle
+            </Menu.Item>
+            <Menu.Item as="a">
+              <Icon name="ethereum" />
+              Eklediğim Filmler
+            </Menu.Item>
+            <Dropdown
+              icon="user circle outline"
+              item
+              simple
+              text={ storedData.fullname }
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item as={Button} onClick={logout}>
+                  <Icon name="log out" />
+                  Çıkış Yap 
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item>
+                  <Icon name="user" />
+                  Hesabı Güncelle
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Icon name="remove user" />
+                  Hesabı Sil
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+        </React.Fragment>
+      )
+    }
+    else{
+        routes = (
+          <React.Fragment>
+          <Menu.Item as={Link} to="/login">
+                <Icon name="sign-in" />
+                Giriş Yap / Üye Ol
           </Menu.Item>
+          </React.Fragment>
+        )
+    }
+    return (
+      <React.Fragment>
+        <Menu fixed="top" inverted>
+          <Container>
+            <Link to="/">
+              <Menu.Item header>
+                <Image
+                  size="mini"
+                  src={logo}
+                  style={{ marginRight: "1.5em" }}
+                />
+                MyMoviezz
+              </Menu.Item>
+            </Link>
+            <Menu.Item as={Link} to="/admins" position="right">
+              <Icon name="adn" />
+              Adminlerimiz
+            </Menu.Item>
+            {routes}
+          </Container>
+        </Menu>
+      </React.Fragment>
+    );
+  }
+}
 
-          <Dropdown 
-            icon="user circle outline"
-            item
-            simple
-            text="Admin Name &nbsp;"
-          >
-            <Dropdown.Menu >
-            <Dropdown.Item>
-                <Icon name="log out" />
-                Çıkış Yap
-              </Dropdown.Item>
-              <Dropdown.Divider/>
-              <Dropdown.Item>
-                <Icon name="user" />
-                Hesabı Güncelle
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Icon name="remove user" />
-                Hesabı Sil
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Container>
-      </Menu>
-    </React.Fragment>
-  );
+const mapStateToProps = (state) => {
+  return {
+    token: state.authentication.token,
+    fullname: state.authentication.fullname
+  };
 };
 
-export default HeaderContent;
+const mapDispatchToProps = {
+  login,
+  logout
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderContent);

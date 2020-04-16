@@ -29,7 +29,7 @@ const MovieCard = (props) => {
             Filmi Indir
         </Button>
         </a>
-        <Link to={`/${props.movie.id}`}>
+        <Link to={`/movie/${props.movie.id}`}>
         <Button style={{float:'right'}}>
           <Icon name="hand point right" />
           &nbsp; Detaylar

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MoviesList from "../../components/MoviesList";
+import {HashLoader} from 'react-spinners';
 
 import { fetchMovies } from "../../actions/movies-actions";
 
@@ -12,7 +13,10 @@ class HomePage extends Component {
   render() {
     return (
       <div>
+        {this.props.fetching ?
+        <HashLoader color={"#36bdb3"} size={40} loading={this.props.fetching} /> :
         <MoviesList movies={this.props.movies} />
+        }
       </div>
     );
   }
@@ -21,6 +25,7 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
   return {
     movies: state.data.movies,
+    fetching:state.data.fetching
   };
 };
 

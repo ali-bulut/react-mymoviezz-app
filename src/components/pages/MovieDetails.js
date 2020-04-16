@@ -3,6 +3,7 @@ import Player from 'react-player';
 import { connect } from "react-redux";
 import { fetchMovieById } from "../../actions/movie-details-actions";
 import {  Menu, Segment, Image, Button, Icon } from "semantic-ui-react";
+import {HashLoader} from 'react-spinners';
 import './MovieDetails.css';
 
 class MovieDetails extends Component {
@@ -19,8 +20,12 @@ class MovieDetails extends Component {
   render() {
     const { activeItem } = this.state
     return (
-      <div>
-    <h1><i>{this.props.movie.name}</i> <h4 >{this.props.movie.genre}</h4></h1>
+      <React.Fragment>
+        {this.props.fetching ? 
+        <HashLoader color={"#36bdb3"} size={40} loading={this.props.fetching} /> :
+          <div>
+      <h1><i>{this.props.movie.name}</i> <h4 >{this.props.movie.genre}</h4></h1>
+
         <Segment>
           <Image
             src={this.props.movie.imageUrl}
@@ -65,7 +70,8 @@ class MovieDetails extends Component {
         </Menu.Menu>
         </Menu>
         {this.state.activeItem==="Konu" && <p style={{fontFamily:'Lucida Console'}}>{this.props.movie.description}</p>}
-        {this.state.activeItem==="Fragman" && 
+        { }
+        {this.state.activeItem==="Fragman" &&
         <Player style={{float:'left'}} height="310px" url={this.props.movie.trailerUrl} controls={true}/>
         }
         {this.state.activeItem==="Detaylar" && 
@@ -79,15 +85,18 @@ class MovieDetails extends Component {
         }
           <div style={{ clear: "both" }}></div>
         </Segment>
-      </div>
+        </div>
+
+        }
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    movies: state.data.movies,
     movie: state.data.movie,
+    fetching:state.data.fetching
   };
 };
 
