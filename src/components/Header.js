@@ -10,18 +10,18 @@ import {login,logout} from '../actions/authentication-actions';
 
 
 class HeaderContent extends React.Component {
-  
   render() {
     const logout = () => {
         this.props.logout();
     }
-
+    
+    
     let routes;
     if (localStorage.hasOwnProperty("adminData")) {
      const storedData = JSON.parse(localStorage.getItem("adminData"));
        routes = (
         <React.Fragment>
-          <Menu.Item as="a">
+          <Menu.Item as={Link} to="/addmovie">
               <Icon name="add circle" />
               Yeni Film Ekle
             </Menu.Item>
@@ -93,7 +93,8 @@ class HeaderContent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     token: state.authentication.token,
-    fullname: state.authentication.fullname
+    fullname: state.authentication.fullname,
+    localStorage: state.authentication.localStorage
   };
 };
 

@@ -10,6 +10,7 @@ class HomePage extends Component {
     window.scrollTo(0, 0);
     this.props.fetchMovies();
   }
+ 
   render() {
     return (
       <div>
@@ -25,6 +26,7 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
   return {
     movies: state.data.movies,
+    movie: state.data.movie,
     fetching:state.data.fetching
   };
 };

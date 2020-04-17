@@ -8,7 +8,8 @@ const initalState={
     adminId:null,
     email:null,
     fullname:null,
-    token:null
+    token:null,
+    localStorage:null
 };
 
 
@@ -20,21 +21,22 @@ export default (state=initalState, action) => {
                 fetching:true
             }
         case LOGIN_FULFILLED:
-            localStorage.setItem(
-                "adminData",
-                JSON.stringify({
-                  email: action.payload.email,
-                  fullname: action.payload.fullname,
-                  token: action.payload.token,
-                })
-              );
+            
             return {
                 ...state,
                 adminId:action.payload.adminId,
                 email:action.payload.email,
                 fullname:action.payload.fullname,
                 token:action.payload.token,
-                fetching:false
+                fetching:false,
+                localStorage:localStorage.setItem(
+                    "adminData",
+                    JSON.stringify({
+                      email: action.payload.email,
+                      fullname: action.payload.fullname,
+                      token: action.payload.token,
+                    })
+                  )
             }
             
         case LOGIN_REJECTED:
@@ -45,14 +47,14 @@ export default (state=initalState, action) => {
             }
 
             case "LOGOUT":
-            localStorage.removeItem("adminData");
             return {
                 ...state,
                 adminId:null,
                 email:null,
                 fullname:null,
                 token:null,
-                fetching:false
+                fetching:false,
+                localStorage: localStorage.removeItem("adminData")
             }
 
         default:

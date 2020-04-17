@@ -12,44 +12,50 @@ import MovieDetails from "./components/pages/MovieDetails";
 import AdminList from "./components/pages/AdminList";
 import LoginPage from "./components/pages/LoginPage";
 import { connect } from "react-redux";
+import AddMovie from "./components/pages/AddMovie";
 
 
 class App extends React.Component {
-  // let routes;
-
-  // if(!props.token){
-  //   routes=(
-  //     <Switch>
-  //           <Route path="/" exact component={HomePage}></Route>
-  //           <Route path="/admins" exact component={AdminList}></Route>
-  //           <Route path="/login" exact component={LoginPage}></Route>
-  //           <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
-  //     </Switch>
-  //   );
-  // }
-  // else{
-  //   routes=(
-  //   <Switch>
-  //           <Route path="/" exact component={HomePage}></Route>
-  //           <Route path="/admins" exact component={AdminList}></Route>
-  //           <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
-  //     </Switch>
-  //   )
-  // }
-
   render(){
-  return (
-    <div>
-      <HeaderContent />
-          <Container style={{ marginTop: "7em" }}>
-            {/* {routes} */}
-            <Switch>
+  let routes;
+    //  const storedData = JSON.parse(localStorage.getItem("adminData"));
+  if(!localStorage.hasOwnProperty('adminData')){
+    routes=(
+      <Switch>
             <Route path="/" exact component={HomePage}></Route>
             <Route path="/admins" exact component={AdminList}></Route>
             <Route path="/login" exact component={LoginPage}></Route>
             <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
             <Redirect to="/"/>
-          </Switch>
+      </Switch>
+    );
+  }
+  else{
+    routes=(
+    <Switch>
+            <Route path="/" exact component={HomePage}></Route>
+            <Route path="/admins" exact component={AdminList}></Route>
+            <Route path="/addmovie" exact component={AddMovie}></Route>
+            <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
+            <Redirect to="/"/>
+      </Switch>
+    )
+  }
+
+
+  return (
+    <div>
+      <HeaderContent />
+          <Container style={{ marginTop: "7em" }}>
+            {routes}
+            {/* <Switch>
+            <Route path="/" exact component={HomePage}></Route>
+            <Route path="/admins" exact component={AdminList}></Route>
+            <Route path="/login" exact component={LoginPage}></Route>
+            <Route path="/movie/add" exact component={AddMovie}></Route>
+            <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
+            <Redirect to="/"/>
+          </Switch> */}
           </Container>
   
       <FooterContent />
@@ -61,6 +67,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     token: state.authentication.token,
+    localStorage: state.authentication.localStorage
   };
 };
 
