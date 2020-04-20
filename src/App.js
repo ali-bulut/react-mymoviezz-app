@@ -14,6 +14,9 @@ import LoginPage from "./components/pages/LoginPage";
 import { connect } from "react-redux";
 import AddMovie from "./components/pages/AddMovie";
 
+import './components/pages/LoginPage.css'
+import OwnMovies from "./components/pages/OwnMovies";
+import EditMovie from "./components/pages/EditMovie";
 
 class App extends React.Component {
   render(){
@@ -36,6 +39,8 @@ class App extends React.Component {
             <Route path="/" exact component={HomePage}></Route>
             <Route path="/admins" exact component={AdminList}></Route>
             <Route path="/addmovie" exact component={AddMovie}></Route>
+            <Route path="/editmovie/:movieId" exact component={EditMovie}></Route>
+            <Route path="/mymovies" exact component={OwnMovies}></Route>
             <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
             <Redirect to="/"/>
       </Switch>
@@ -46,7 +51,7 @@ class App extends React.Component {
   return (
     <div>
       <HeaderContent />
-          <Container style={{ marginTop: "7em" }}>
+          <Container style={{ marginTop: "7em" }} >
             {routes}
             {/* <Switch>
             <Route path="/" exact component={HomePage}></Route>

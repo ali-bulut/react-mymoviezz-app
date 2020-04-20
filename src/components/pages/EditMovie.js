@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Form, Image } from "semantic-ui-react";
+import {withRouter} from 'react-router-dom';
 import { connect } from "react-redux";
-import { addMovie } from "../../actions/movies-actions";
+import { editMovie } from "../../actions/movies-actions";
+import {fetchMovieById} from '../../actions/movie-details-actions';
 import { HashLoader } from "react-spinners";
 import { Redirect } from "react-router-dom";
 
@@ -21,14 +23,39 @@ class AddMovie extends Component {
     done: false,
   };
   componentDidMount() {
+    const movieId = this.props.match.params.movieId;
+    const storedData = JSON.parse(localStorage.getItem("adminData"));
+    this.props.fetchMovieById(movieId).then(() => {
+      this.setState({
+        name:this.props.movie.name,
+        trailerUrl:this.props.movie.trailerUrl,
+        genre:this.props.movie.genre,
+        director:this.props.movie.director,
+        country:this.props.movie.country,
+        duration:this.props.movie.duration,
+        imdb:this.props.movie.imdbPoint,
+        publishedDate:this.props.movie.publishedDate,
+        downloadUrl:this.props.movie.downloadUrl,
+        imageUrl:this.props.movie.imageUrl,
+        description:this.props.movie.description,
+
+      })
+
+      if(this.props.movie.creator !== storedData.adminId){
+        this.props.history.push('/');
+      }
+    });
+    
     window.scrollTo(0, 0);
   }
-  
   render() {
-    const addMovieSubmitHandler = (e) => {
+    const editMovieSubmitHandler = (e) => {
+    const movieId = this.props.match.params.movieId
+    console.log();
       e.preventDefault();
       if (localStorage.hasOwnProperty("adminData"))
-        this.props.addMovie(
+        this.props.editMovie(
+          movieId,
           this.state.name,
           this.state.downloadUrl,
           this.state.imageUrl,
@@ -61,6 +88,7 @@ class AddMovie extends Component {
             <h2>Yeni Film Ekle</h2>
             <Form.Group widths="2">
               <Form.Input 
+                value={this.state.name || ""}
                 onChange={handleChange}
                 name="name"
                 fluid
@@ -68,6 +96,7 @@ class AddMovie extends Component {
                 placeholder="Film Adı"
               />
               <Form.Input
+              value={this.state.genre || ""}
                 onChange={handleChange}
                 name="genre"
                 fluid
@@ -77,6 +106,7 @@ class AddMovie extends Component {
             </Form.Group>
             <Form.Group widths="2">
               <Form.Input
+              value={this.state.director || ""}
                 onChange={handleChange}
                 name="director"
                 fluid
@@ -84,6 +114,7 @@ class AddMovie extends Component {
                 placeholder="Yönetmen"
               />
               <Form.Input
+              value={this.state.country || ""}
                 onChange={handleChange}
                 name="country"
                 fluid
@@ -93,6 +124,7 @@ class AddMovie extends Component {
             </Form.Group>
             <Form.Group widths="2">
               <Form.Input
+              value={this.state.duration || ""}
                 onChange={handleChange}
                 name="duration"
                 fluid
@@ -100,6 +132,7 @@ class AddMovie extends Component {
                 placeholder="Film Uzunluğu"
               />
               <Form.Input
+              value={this.state.imdb || ""}
                 onChange={handleChange}
                 name="imdb"
                 fluid
@@ -109,6 +142,7 @@ class AddMovie extends Component {
             </Form.Group>
             <Form.Group widths="2">
               <Form.Input
+              value={this.state.publishedDate || ""}
                 fluid
                 name="publishedDate"
                 label="Yayınlanma Tarihi"
@@ -116,6 +150,7 @@ class AddMovie extends Component {
                 onChange={handleChange}
               />
               <Form.Input
+              value={this.state.downloadUrl || ""}
                 onChange={handleChange}
                 name="downloadUrl"
                 fluid
@@ -125,6 +160,7 @@ class AddMovie extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Input
+              value={this.state.imageUrl || ""}
                 name="imageUrl"
                 onChange={handleChange}
                 width="8"
@@ -133,6 +169,7 @@ class AddMovie extends Component {
                 placeholder="Resim Linki"
               />
               <Form.Input
+              value={this.state.trailerUrl || ""}
                 name="trailerUrl"
                 onChange={handleChange}
                 width="8"
@@ -146,6 +183,7 @@ class AddMovie extends Component {
                 <Image size="tiny" src={this.state.imageUrl} />
               )}
               <Form.TextArea
+              value={this.state.description || ""}
                 name="description"
                 onChange={handleChange}
                 label="Konu"
@@ -153,8 +191,8 @@ class AddMovie extends Component {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Button type="submit" onClick={addMovieSubmitHandler}>
-                Oluştur
+              <Form.Button type="submit" onClick={editMovieSubmitHandler}>
+                Güncelle
               </Form.Button>
             </Form.Group>
           </Form>
@@ -173,7 +211,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  addMovie,
+  editMovie,
+  fetchMovieById
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMovie);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddMovie));

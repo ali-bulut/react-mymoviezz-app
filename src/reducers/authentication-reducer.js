@@ -32,6 +32,7 @@ export default (state=initalState, action) => {
                 localStorage:localStorage.setItem(
                     "adminData",
                     JSON.stringify({
+                        adminId: action.payload.adminId,
                       email: action.payload.email,
                       fullname: action.payload.fullname,
                       token: action.payload.token,

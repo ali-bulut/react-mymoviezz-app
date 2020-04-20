@@ -9,7 +9,7 @@ const MoviesList = (props) => {
             <Grid columns={3}>
             {props.movies.map(movie => 
                 <Grid.Column key={movie.id}>
-                <MovieCard movie={movie} />
+                <MovieCard isAdmin={props.isAdmin} movie={movie} />
               </Grid.Column>
                 )}
               

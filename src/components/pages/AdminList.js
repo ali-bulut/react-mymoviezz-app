@@ -7,6 +7,7 @@ import { fetchAdmins } from "../../actions/admins-actions";
 
 class AdminList extends Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.fetchAdmins();
   }
 

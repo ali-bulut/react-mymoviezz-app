@@ -25,7 +25,7 @@ class HeaderContent extends React.Component {
               <Icon name="add circle" />
               Yeni Film Ekle
             </Menu.Item>
-            <Menu.Item as="a">
+            <Menu.Item as={Link} to="/mymovies">
               <Icon name="ethereum" />
               Eklediğim Filmler
             </Menu.Item>

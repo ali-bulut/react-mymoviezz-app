@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../../actions/authentication-actions";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {HashLoader} from 'react-spinners';
 import logo from "../../logo.svg";
 import {
@@ -14,6 +14,7 @@ import {
   Image,
 } from "semantic-ui-react";
 
+
 class LoginPage extends Component {
   state = {
     email: "",
@@ -24,13 +25,18 @@ class LoginPage extends Component {
     createUserError: false,
   };
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+  
+
   render() {
     const loginSubmitHandler = (e) => {
       e.preventDefault();
       let error = false;
       // eslint-disable-next-line
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (this.state.email === "" || !re.test(this.state.email) ) {
+      let checkIsEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (this.state.email === "" || !checkIsEmail.test(this.state.email) ) {
         this.setState({ emailError: true });
         error = true;
       } else {
@@ -50,8 +56,9 @@ class LoginPage extends Component {
         return;
       }
       this.setState({ formError: false });
-      this.props.login(this.state.email, this.state.password);
-      this.setState({ createUserError: true });
+      this.props.login(this.state.email, this.state.password).then(() => {
+        this.setState({ createUserError: false });
+      }).catch(() => this.setState({ createUserError: true }));
     };
 
     const handleChange = (e) => {
@@ -131,9 +138,6 @@ class LoginPage extends Component {
             </Segment>
             {this.props.token && <Redirect to="/" />}
           </Form>
-          <Message>
-            Yeni Misin? <Link to="/signup">Üye Ol... </Link>
-          </Message>
         </Grid.Column>
       </Grid>
   }
@@ -147,7 +151,6 @@ const mapStateToProps = (state) => {
     token: state.authentication.token,
     email: state.authentication.email,
     fullname: state.authentication.fullname,
-    error: state.authentication.error,
     fetching: state.authentication.fetching
   };
 };

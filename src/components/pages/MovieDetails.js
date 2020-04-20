@@ -24,7 +24,8 @@ class MovieDetails extends Component {
         {this.props.fetching ? 
         <HashLoader color={"#36bdb3"} size={40} loading={this.props.fetching} /> :
           <div>
-      <h1><i>{this.props.movie.name}</i> <h4 >{this.props.movie.genre}</h4></h1>
+      <h1><i>{this.props.movie.name}</i></h1> 
+      <h4>{this.props.movie.genre}</h4>
 
         <Segment>
           <Image
