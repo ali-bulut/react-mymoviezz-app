@@ -79,7 +79,7 @@ class LoginPage extends Component {
 
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src={logo} /> Hesabına Giriş Yap
+            <Image src={logo} /> Admin Kontrol Paneli
           </Header>
           <Form
             size="large"

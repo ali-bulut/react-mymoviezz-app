@@ -72,7 +72,9 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     token: state.authentication.token,
-    localStorage: state.authentication.localStorage
+    localStorage: state.authentication.localStorage,
+    adminData: state.admins.adminData,
+    deletedToken: state.admins.deletedToken
   };
 };
 

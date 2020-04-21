@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import logo from "../logo.svg";
 
 import { Container, Dropdown, Image, Menu, Icon, Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import { connect } from "react-redux";
 
-import {login,logout} from '../actions/authentication-actions';
+import {login,logout, deleteAdmin} from '../actions/authentication-actions';
 
 
 class HeaderContent extends React.Component {
@@ -15,6 +15,11 @@ class HeaderContent extends React.Component {
         this.props.logout();
     }
     
+    const deleteAccount = () => {
+      this.props.deleteAdmin().then(() => {
+        this.props.history.push('/login');
+      });
+    }
     
     let routes;
     if (localStorage.hasOwnProperty("adminData")) {
@@ -45,7 +50,7 @@ class HeaderContent extends React.Component {
                   <Icon name="user" />
                   Hesabı Güncelle
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item as={Button} onClick={deleteAccount}>
                   <Icon name="remove user" />
                   Hesabı Sil
                 </Dropdown.Item>
@@ -100,7 +105,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   login,
-  logout
+  logout,
+  deleteAdmin
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(HeaderContent);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HeaderContent));

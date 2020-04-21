@@ -1,5 +1,6 @@
 import {
-    LOGIN_FULFILLED, LOGIN_REJECTED, LOGIN_PENDING
+    LOGIN_FULFILLED, LOGIN_REJECTED, LOGIN_PENDING,
+    DELETE_ADMIN_FULFILLED, DELETE_ADMIN_REJECTED, DELETE_ADMIN_PENDING
 } from '../actions/authentication-actions';
 
 const initalState={
@@ -57,6 +58,30 @@ export default (state=initalState, action) => {
                 fetching:false,
                 localStorage: localStorage.removeItem("adminData")
             }
+
+            case DELETE_ADMIN_PENDING:
+                return {
+                    ...state,
+                    fetching:true
+                }
+            case DELETE_ADMIN_FULFILLED:
+                
+                return {
+                    ...state,
+                    adminId:null,
+                    email:null,
+                    fullname:null,
+                    token:null,
+                    fetching:false,
+                    localStorage: localStorage.removeItem("adminData")
+                }
+                
+            case DELETE_ADMIN_REJECTED:
+                return {
+                    ...state,
+                    error:action.payload,
+                    fetching:false
+                }
 
         default:
             return state;
