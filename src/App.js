@@ -17,6 +17,7 @@ import AddMovie from "./components/pages/AddMovie";
 import './components/pages/LoginPage.css'
 import OwnMovies from "./components/pages/OwnMovies";
 import EditMovie from "./components/pages/EditMovie";
+import UpdateAdmin from "./components/pages/UpdateAdmin";
 
 class App extends React.Component {
   render(){
@@ -42,6 +43,7 @@ class App extends React.Component {
             <Route path="/editmovie/:movieId" exact component={EditMovie}></Route>
             <Route path="/mymovies" exact component={OwnMovies}></Route>
             <Route path="/movie/:movieId" exact component={MovieDetails}></Route>
+            <Route path="/account/update/:adminId" exact component={UpdateAdmin}></Route>
             <Redirect to="/"/>
       </Switch>
     )

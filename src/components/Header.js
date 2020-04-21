@@ -46,7 +46,7 @@ class HeaderContent extends React.Component {
                   Çıkış Yap 
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>
+                <Dropdown.Item as={Link} to={`/account/update/${storedData.adminId}`}>
                   <Icon name="user" />
                   Hesabı Güncelle
                 </Dropdown.Item>
