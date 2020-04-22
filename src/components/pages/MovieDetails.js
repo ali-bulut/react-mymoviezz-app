@@ -60,9 +60,9 @@ class MovieDetails extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Item
-            name='Fragman'
+            name='Filmi İzle'
             style={{fontFamily:'Verdana'}}
-            active={activeItem === 'Fragman'}
+            active={activeItem === 'Filmi İzle'}
             onClick={this.handleItemClick}
           />
           <Menu.Menu position='right'>
@@ -82,7 +82,7 @@ class MovieDetails extends Component {
         </Menu>
         {this.state.activeItem==="Konu" && <p style={{fontFamily:'Lucida Console'}}>{this.props.movie.description}</p>}
         { }
-        {this.state.activeItem==="Fragman" &&
+        {this.state.activeItem==="Filmi İzle" &&
         <Player style={{float:'left'}} height="310px" url={this.props.movie.trailerUrl} controls={true}/>
         }
         {this.state.activeItem==="Detaylar" && 
