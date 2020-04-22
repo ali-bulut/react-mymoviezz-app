@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Player from 'react-player';
+// import Player from 'react-player';
 import { connect } from "react-redux";
 import {withRouter} from 'react-router-dom'
 import { fetchMovieById } from "../../actions/movie-details-actions";
@@ -83,7 +83,8 @@ class MovieDetails extends Component {
         {this.state.activeItem==="Konu" && <p style={{fontFamily:'Lucida Console'}}>{this.props.movie.description}</p>}
         { }
         {this.state.activeItem==="Filmi İzle" &&
-        <Player style={{float:'left'}} height="310px" url={this.props.movie.trailerUrl} controls={true}/>
+        // <iframe style={{float:'left'}} height="310px" url={this.props.movie.trailerUrl} controls={true}></iframe>
+        <iframe title="trailer" src={this.props.movie.trailerUrl} controls={true} style={{float:'left', width:'50%'}} height="310px"></iframe>
         }
         {this.state.activeItem==="Detaylar" && 
         <div>
