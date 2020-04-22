@@ -7,6 +7,10 @@ import {fetchMovieById} from '../../actions/movie-details-actions';
 import { HashLoader } from "react-spinners";
 import { Redirect } from "react-router-dom";
 
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
+
 class AddMovie extends Component {
   state = {
     name: "",
@@ -22,7 +26,19 @@ class AddMovie extends Component {
     description: "",
     done: false,
   };
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
+  }
   componentDidMount() {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
     const movieId = this.props.match.params.movieId;
     const storedData = JSON.parse(localStorage.getItem("adminData"));
     this.props.fetchMovieById(movieId).then(() => {
@@ -212,7 +228,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   editMovie,
-  fetchMovieById
+  fetchMovieById,
+  logout
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddMovie));

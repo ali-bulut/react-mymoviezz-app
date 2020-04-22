@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router-dom';
 import MoviesList from "../../components/MoviesList";
 import {HashLoader} from 'react-spinners';
 
 import { fetchMovies } from "../../actions/movies-actions";
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
 
 class HomePage extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.fetchMovies();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout);
   }
  
   render() {
@@ -33,6 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchMovies,
+  logout
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

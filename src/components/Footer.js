@@ -18,37 +18,11 @@ const FooterContent = () => {
             <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
       <Container textAlign='center'>
         <Grid divided inverted stackable>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 1' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 2' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 3' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <Header inverted as='h4' content='Footer Header' />
+          
+          <Grid.Column >
+            <Header inverted as='h4' content='MyMoviezz Web Uygulaması' />
             <p>
-              Extra space for a call to action inside the footer that could help re-engage users.
+              Designed by Ali Bulut <br/> 	&copy; 2020
             </p>
           </Grid.Column>
         </Grid>
@@ -56,18 +30,18 @@ const FooterContent = () => {
         <Divider inverted section />
         <Image centered size='mini' src={logo} />
         <List horizontal inverted divided link size='small'>
-          <List.Item as='a' href='#'>
-            Site Map
+          <List.Item as='a' target="_blank" href='mailto:alibulut@yahoo.com'>
+            Mail
           </List.Item>
-          <List.Item as='a' href='#'>
-            Contact Us
+          <List.Item as='a' target="_blank" href='https://www.linkedin.com/in/bulutali/'>
+            LinkedIn
           </List.Item>
-          <List.Item as='a' href='#'>
-            Terms and Conditions
+          <List.Item as='a' target="_blank" href='https://www.github.com/ali-bulut/'>
+            Diğer Projelerim
           </List.Item>
-          <List.Item as='a' href='#'>
+          {/* <List.Item as='a' href='#'>
             Privacy Policy
-          </List.Item>
+          </List.Item> */}
         </List>
       </Container>
     </Segment>

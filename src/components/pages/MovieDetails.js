@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import Player from 'react-player';
 import { connect } from "react-redux";
+import {withRouter} from 'react-router-dom'
 import { fetchMovieById } from "../../actions/movie-details-actions";
 import {  Menu, Segment, Image, Button, Icon } from "semantic-ui-react";
 import {HashLoader} from 'react-spinners';
 import './MovieDetails.css';
+
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
 
 class MovieDetails extends Component {
   state = { activeItem: 'Konu' }
@@ -12,9 +17,14 @@ class MovieDetails extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   componentDidMount() {
+    checkExpire(this.props.logout);
     window.scrollTo(0, 0);
     const movieId = this.props.match.params.movieId;
     this.props.fetchMovieById(movieId);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout);
   }
   
   render() {
@@ -103,6 +113,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchMovieById,
+  logout
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MovieDetails));

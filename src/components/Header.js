@@ -20,13 +20,13 @@ class HeaderContent extends React.Component {
         this.props.history.push('/login');
       });
     }
-    
+
     let routes;
     if (localStorage.hasOwnProperty("adminData")) {
      const storedData = JSON.parse(localStorage.getItem("adminData"));
        routes = (
         <React.Fragment>
-          <Menu.Item as={Link} to="/addmovie">
+          <Menu.Item as={Link} to="/addmovie" position="right">
               <Icon name="add circle" />
               Yeni Film Ekle
             </Menu.Item>
@@ -62,7 +62,7 @@ class HeaderContent extends React.Component {
     else{
         routes = (
           <React.Fragment>
-          <Menu.Item as={Link} to="/login">
+          <Menu.Item position="right" as={Link} to="/login">
                 <Icon name="sign-in" />
                 Giriş Yap / Üye Ol
           </Menu.Item>
@@ -74,7 +74,7 @@ class HeaderContent extends React.Component {
         <Menu fixed="top" inverted>
           <Container>
             <Link to="/">
-              <Menu.Item header>
+              <Menu.Item header position="left">
                 <Image
                   size="mini"
                   src={logo}
@@ -83,10 +83,10 @@ class HeaderContent extends React.Component {
                 MyMoviezz
               </Menu.Item>
             </Link>
-            <Menu.Item as={Link} to="/admins" position="right">
+            {/* <Menu.Item as={Link} to="/admins" position="right">
               <Icon name="adn" />
               Adminlerimiz
-            </Menu.Item>
+            </Menu.Item> */}
             {routes}
           </Container>
         </Menu>

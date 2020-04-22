@@ -7,7 +7,20 @@ import MoviesList from "../../components/MoviesList";
 
 import { fetchMoviesByAdmin } from "../../actions/movies-actions";
 
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
+
 class OwnMovies extends Component {
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout)
+    .then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
+  }
+
   state = { modalOpen: true };
 
   handleOpen = () => this.setState({ modalOpen: true });
@@ -18,6 +31,12 @@ class OwnMovies extends Component {
     };
 
   componentDidMount() {
+    checkExpire(this.props.logout)
+    .then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
     const storedData = JSON.parse(localStorage.getItem("adminData"));
     console.log(storedData.adminId);
     this.props.fetchMoviesByAdmin(storedData.adminId);
@@ -70,6 +89,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchMoviesByAdmin,
+  logout
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OwnMovies));

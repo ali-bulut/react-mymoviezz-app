@@ -6,6 +6,10 @@ import {updateAdmin, fetchAdminById} from '../../actions/admins-actions';
 import { HashLoader } from "react-spinners";
 import { Redirect } from "react-router-dom";
 
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
+
 class AddMovie extends Component {
   state = {
     fullname: "",
@@ -14,7 +18,19 @@ class AddMovie extends Component {
     image:"",
     done: false,
   };
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
+  }
   componentDidMount() {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
     const storedData = JSON.parse(localStorage.getItem("adminData"));
     const adminId = storedData.adminId;
     this.props.fetchAdminById(adminId).then(() => {
@@ -24,17 +40,6 @@ class AddMovie extends Component {
         password:this.props.admin.password,
         image:this.props.admin.image,
       })
-
-
-      // localStorage.setItem(
-      //   "adminData",
-      //   JSON.stringify({
-      //     adminId: action.payload.adminId,
-      //     email: action.payload.email,
-      //     fullname: action.payload.fullname,
-      //     token: action.payload.token,
-      //   })
-      // )
 
       if(this.props.admin.id !== storedData.adminId){
         this.props.history.push('/');
@@ -151,7 +156,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   updateAdmin,
-  fetchAdminById
+  fetchAdminById,
+  logout
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddMovie));

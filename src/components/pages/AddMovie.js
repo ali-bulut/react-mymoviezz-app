@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { Form, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
+import {withRouter} from 'react-router-dom';
 import { addMovie } from "../../actions/movies-actions";
 import { HashLoader } from "react-spinners";
 import { Redirect } from "react-router-dom";
+
+import {logout} from '../../actions/authentication-actions';
+
+import checkExpire from '../../util/checkTokenExpire';
 
 class AddMovie extends Component {
   state = {
@@ -20,10 +25,24 @@ class AddMovie extends Component {
     description: "",
     done: false,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
+  }
+
   componentDidMount() {
+    checkExpire(this.props.logout).then(() => {
+      if(!localStorage.hasOwnProperty('adminData')){
+      this.props.history.push('/login');
+      }
+    });
     window.scrollTo(0, 0);
   }
-  
+
   render() {
     const addMovieSubmitHandler = (e) => {
       e.preventDefault();
@@ -174,6 +193,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   addMovie,
+  logout
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMovie);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddMovie));

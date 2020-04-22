@@ -19,8 +19,11 @@ import OwnMovies from "./components/pages/OwnMovies";
 import EditMovie from "./components/pages/EditMovie";
 import UpdateAdmin from "./components/pages/UpdateAdmin";
 
+
 class App extends React.Component {
+  
   render(){
+
   let routes;
     //  const storedData = JSON.parse(localStorage.getItem("adminData"));
   if(!localStorage.hasOwnProperty('adminData')){
