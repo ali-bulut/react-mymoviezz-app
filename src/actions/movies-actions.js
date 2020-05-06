@@ -21,16 +21,14 @@ export const DELETE_MOVIE_FULFILLED="DELETE_MOVIE_FULFILLED";
 export const DELETE_MOVIE_REJECTED="DELETE_MOVIE_REJECTED";
 export const DELETE_MOVIE_PENDING="DELETE_MOVIE_PENDING";
 
-export function fetchMovies() {
-  return (dispatch) => {
-    dispatch({
-      type: "FETCH_MOVIES",
-      payload: axios
-        .get(`${API_BASE}/movies`)
-        .then((result) => result.data.movies),
-    });
-  };
-}
+export const fetchMovies = () => (dispatch) => Promise.resolve().then(() => {
+  return dispatch({
+    type: "FETCH_MOVIES",
+    payload: axios
+      .get(`${API_BASE}/movies`)
+      .then((result) => result.data.movies),
+  })
+})
 
 export function fetchMoviesByAdmin (adminId) {
   return (dispatch) => {
